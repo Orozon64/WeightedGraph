@@ -2,14 +2,35 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    static ArrayList<GraphNode> nodes = new ArrayList<GraphNode>();
+    static ArrayList<GraphNode> nodes = new ArrayList<>();
     public static void main(String[] args) {
         Scanner myScn = new Scanner(System.in);
-        System.out.println("Podaj id wierzchołka");
-        int nodekey = Integer.parseInt(myScn.nextLine());
-        GraphNode n1 = new GraphNode(nodekey);
-        nodes.add(n1);
-        Connect(n1);
+        boolean should_stop = false;
+        do{
+            System.out.println("Podaj id wierzchołka");
+            int nodekey = Integer.parseInt(myScn.nextLine());
+            GraphNode n1 = new GraphNode(nodekey);
+            nodes.add(n1);
+            Connect(n1);
+            System.out.println("Dodać jescze jakieś węzły? 0 - tak, 1 - nie");
+            int continue_response = Integer.parseInt(myScn.nextLine());
+            switch (continue_response){
+                case 0:
+                    break;
+                case 1:
+                    should_stop = true;
+                    break;
+
+            }
+        }while (!should_stop);
+
+        for (GraphNode no: nodes){
+            System.out.println("Obecny węzeł ma klucz równy " + no.key);
+            System.out.println("Jest powiązany z:");
+            for(GraphEdge ge: no.edges){
+                System.out.println("Węzłem o kluczu " + ge.nodeToConnect.key + " połączeniem o wadze " + ge.weight);
+            }
+        }
     }
     public static void Connect(GraphNode con_node){
         Scanner myScn = new Scanner(System.in);
